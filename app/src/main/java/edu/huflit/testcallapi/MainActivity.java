@@ -17,6 +17,7 @@ import java.util.jar.JarEntry;
 
 import edu.huflit.testcallapi.api.ApiService;
 import edu.huflit.testcallapi.model.Currency;
+import edu.huflit.testcallapi.model.Post;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvSouce;
     private TextView tvUSD;
     private Button btnCallAPI;
+    private TextView tvPostResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +38,12 @@ public class MainActivity extends AppCompatActivity {
         tvSouce = findViewById(R.id.tv_Source);
         tvUSD = findViewById(R.id.tv_USDVND);
         btnCallAPI= findViewById(R.id.btn_Callapi);
+        tvPostResult = findViewById(R.id.tvPostResult);
         btnCallAPI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickCallApi();
+                //clickCallApi();
+                sendPost();
             }
         });
     }
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         ApiService.apiService.convertUsdToVnd("843d4d34ae72b3882e3db642c51e28e6","VND","USD",1).enqueue(new Callback<Currency>() {
             @Override
             public void onResponse(Call<Currency> call, Response<Currency> response) {
-                Toast.makeText(MainActivity.this,"CALL DC",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"CALL GET DC",Toast.LENGTH_SHORT).show();
                 Currency currency = response.body();
                 if(currency != null&&currency.isSuccess()){
                     tvTerm.setText(currency.getTerms());
@@ -60,7 +64,25 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Currency> call, Throwable t) {
-                Toast.makeText(MainActivity.this,"CALL KO DC",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"CALL GET KO DC",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void sendPost(){
+        Post post= new Post(11,101,"TestPost","english plz");
+        ApiService.apiServicePost.sendPost(post).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                Toast.makeText(MainActivity.this,"CALL POST DC",Toast.LENGTH_SHORT).show();
+                Post postResult= response.body();
+                if (postResult!=null){
+                    tvPostResult.setText(postResult.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Toast.makeText(MainActivity.this,"CALL POST KO DC",Toast.LENGTH_SHORT).show();
             }
         });
     }

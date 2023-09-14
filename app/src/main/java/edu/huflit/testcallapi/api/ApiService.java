@@ -4,15 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import edu.huflit.testcallapi.model.Currency;
+import edu.huflit.testcallapi.model.Post;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
     //Ling API : http://apilayer.net/api/live?access_key=843d4d34ae72b3882e3db642c51e28e6&currencies=VND&source=USD&format=1
+    // Link API post : https://jsonplaceholder.typicode.com/posts
     Gson gson= new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create();
@@ -23,6 +27,11 @@ public interface ApiService {
             .build()
             .create(ApiService.class);
 
+    ApiService apiServicePost = new Retrofit.Builder()
+            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+            .create(ApiService.class);
     @GET("api/live")
     Call<Currency> convertUsdToVnd(@Query("access_key") String access_key,
                                    @Query("currencies") String currencies,
@@ -38,4 +47,6 @@ public interface ApiService {
     Call<Currency> getListUserFromGroup(@Path("id") int groupId,
                                         @Query("sort") String sort);
     //co nhieu cach goi get khach thong qua URL MANIPULATION trong trang https://square.github.io/retrofit/
+    @POST("/posts")
+    Call<Post>sendPost(@Body Post post);
 }
