@@ -3,8 +3,11 @@ package edu.huflit.testcallapi.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
+
 import edu.huflit.testcallapi.model.Currency;
 import edu.huflit.testcallapi.model.Post;
+import edu.huflit.testcallapi.model.User;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,6 +20,7 @@ import retrofit2.http.Query;
 public interface ApiService {
     //Ling API : http://apilayer.net/api/live?access_key=843d4d34ae72b3882e3db642c51e28e6&currencies=VND&source=USD&format=1
     // Link API post : https://jsonplaceholder.typicode.com/posts
+    // Link API User :https://jsonplaceholder.typicode.com/posts?userId=1
     Gson gson= new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create();
@@ -32,6 +36,13 @@ public interface ApiService {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
+    ApiService apiServiceGetUser = new Retrofit.Builder()
+            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+            .create(ApiService.class);
+    @GET("posts")
+    Call<List<User>> getUserList(@Query("userId") int userId);
     @GET("api/live")
     Call<Currency> convertUsdToVnd(@Query("access_key") String access_key,
                                    @Query("currencies") String currencies,

@@ -2,18 +2,12 @@ package edu.huflit.testcallapi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.jar.JarEntry;
 
 import edu.huflit.testcallapi.api.ApiService;
 import edu.huflit.testcallapi.model.Currency;
@@ -28,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvSouce;
     private TextView tvUSD;
     private Button btnCallAPI;
+    private Button btnChangeAct;
     private TextView tvPostResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +34,19 @@ public class MainActivity extends AppCompatActivity {
         tvUSD = findViewById(R.id.tv_USDVND);
         btnCallAPI= findViewById(R.id.btn_Callapi);
         tvPostResult = findViewById(R.id.tvPostResult);
+        btnChangeAct= findViewById(R.id.btnChangrActi);
         btnCallAPI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //clickCallApi();
                 sendPost();
+            }
+        });
+        btnChangeAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent I = new Intent(view.getContext(), RecyclerViewActivity.class);
+                startActivity(I);
             }
         });
     }
