@@ -28,10 +28,12 @@ public class RecyclerViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recycler_view);
 
         rcvUser = findViewById(R.id.rcv_User);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rcvUser.setLayoutManager(linearLayoutManager);
         rcvUser.addItemDecoration(itemDecoration);
+
         listUser= new ArrayList<>();
 
         callApiGetUser();
