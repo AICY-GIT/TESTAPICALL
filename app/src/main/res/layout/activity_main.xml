@@ -87,5 +87,11 @@
         android:id="@+id/btnChangrActi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đổi Activity" />
+        android:text="Activity recyclerView" />
+
+    <Button
+        android:id="@+id/btn_Act_Chon_Anh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Activity chon anh" />
 </LinearLayout>

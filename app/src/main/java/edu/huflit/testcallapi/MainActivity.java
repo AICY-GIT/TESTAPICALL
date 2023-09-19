@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvSouce;
     private TextView tvUSD;
     private Button btnCallAPI;
-    private Button btnChangeAct;
+    private Button btnChangeAct,btnChooseImg;
     private TextView tvPostResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
         btnCallAPI= findViewById(R.id.btn_Callapi);
         tvPostResult = findViewById(R.id.tvPostResult);
         btnChangeAct= findViewById(R.id.btnChangrActi);
+        btnChooseImg = findViewById(R.id.btn_Act_Chon_Anh);
+        btnChooseImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,UploadImgActivity.class);
+                startActivity(intent);
+            }
+        });
         btnCallAPI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
