@@ -8,12 +8,17 @@ import java.util.List;
 import edu.huflit.testcallapi.model.Currency;
 import edu.huflit.testcallapi.model.Post;
 import edu.huflit.testcallapi.model.User;
+import edu.huflit.testcallapi.model.UserIMG;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -60,4 +65,10 @@ public interface ApiService {
     //co nhieu cach goi get khach thong qua URL MANIPULATION trong trang https://square.github.io/retrofit/
     @POST("/posts")
     Call<Post>sendPost(@Body Post post);
+    //Xai multipart thi phai co part va Request body
+    @Multipart
+    @POST("/posts")
+    Call<UserIMG> registerAccount(@Part(Const.KEY_USERNAME)RequestBody username,
+                                  @Part(Const.KEY_PASSWORD) RequestBody password,
+                                  @Part MultipartBody.Part avt);
 }
