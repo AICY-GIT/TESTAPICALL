@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvSouce;
     private TextView tvUSD;
     private Button btnCallAPI;
-    private Button btnChangeAct,btnChooseImg;
+    private Button btnChangeAct,btnChooseImg,btnCallDynamic;
     private TextView tvPostResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
         tvPostResult = findViewById(R.id.tvPostResult);
         btnChangeAct= findViewById(R.id.btnChangrActi);
         btnChooseImg = findViewById(R.id.btn_Act_Chon_Anh);
+        btnCallDynamic = findViewById(R.id.btnCallDynamic);
+        btnCallDynamic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,CallDynamicActivity.class);
+                startActivity(intent);
+            }
+        });
         btnChooseImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

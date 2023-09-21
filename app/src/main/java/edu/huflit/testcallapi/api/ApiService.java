@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 import edu.huflit.testcallapi.model.Currency;
+import edu.huflit.testcallapi.model.MyResponse;
 import edu.huflit.testcallapi.model.Post;
 import edu.huflit.testcallapi.model.User;
 import edu.huflit.testcallapi.model.UserIMG;
@@ -26,6 +27,7 @@ public interface ApiService {
     //Ling API : http://apilayer.net/api/live?access_key=843d4d34ae72b3882e3db642c51e28e6&currencies=VND&source=USD&format=1
     // Link API post : https://jsonplaceholder.typicode.com/posts
     // Link API User :https://jsonplaceholder.typicode.com/posts?userId=1
+    // Link API Dynamic : https://api.github.com/users/
     Gson gson= new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create();
@@ -46,6 +48,13 @@ public interface ApiService {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
+    ApiService apiServiceDynamic = new Retrofit.Builder()
+            .baseUrl("https://api.github.com")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+            .create(ApiService.class);
+    @GET("/users/{id}")
+    Call<MyResponse> getReponse (@Path("id") int Id);
     @GET("posts")
     Call<List<User>> getUserList(@Query("userId") int userId);
     @GET("api/live")

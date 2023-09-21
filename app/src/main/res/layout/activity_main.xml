@@ -94,4 +94,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Activity chon anh" />
+
+    <Button
+        android:id="@+id/btnCallDynamic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Activity call dynamic" />
 </LinearLayout>
