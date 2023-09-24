@@ -1,19 +1,30 @@
 package edu.huflit.testcallapi.api;
 
+import android.database.Observable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import edu.huflit.testcallapi.model.Currency;
 import edu.huflit.testcallapi.model.MyResponse;
+import edu.huflit.testcallapi.model.ObjectData;
 import edu.huflit.testcallapi.model.Post;
 import edu.huflit.testcallapi.model.User;
 import edu.huflit.testcallapi.model.UserIMG;
+import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -31,7 +42,47 @@ public interface ApiService {
     Gson gson= new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create();
+     //ThemHeader mỗi khi call API
+    Interceptor interceptor = new Interceptor() {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            Request.Builder builder= request.newBuilder();
+            //Nếu muốn truyền thêm key thì copy dòng dưới này
+            builder.addHeader("Authorization","KeyValueHere"); // giá trị token
+            return  chain.proceed(builder.build());
+        }
+    };
+    //log ra mỗi khi call API
+    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor().setLevel((HttpLoggingInterceptor.Level.BODY));
 
+    OkHttpClient.Builder okBuilder = new OkHttpClient.Builder()
+            //interceptor có keyvalue
+            //.addInterceptor(interceptor)
+            //interceptor log
+            .addInterceptor(loggingInterceptor)
+            //trong 20s ko respond thi bao loi
+            .readTimeout(20, java.util.concurrent.TimeUnit.SECONDS)
+            .connectTimeout(20, TimeUnit.SECONDS);
+
+    ApiService apiServiceAddHeader  = new Retrofit.Builder()
+            .baseUrl("http://apilayer.net/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okBuilder.build())
+            .build()
+            .create(ApiService.class);
+    //AndroidRx
+    ApiService apiServiceRxandroid = new Retrofit.Builder()
+            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .client(okBuilder.build())
+            .build()
+            .create(ApiService.class);
+
+    @GET("posts")
+    Observable<List<ObjectData>> CallAPI();
+    //log ra mỗi khi call
     ApiService apiService = new Retrofit.Builder()
             .baseUrl("http://apilayer.net/")
             .addConverterFactory(GsonConverterFactory.create(gson))

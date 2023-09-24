@@ -50,7 +50,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         private final TextView tvId;
         private final TextView tvTitle;
 
-
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             tvId = itemView.findViewById(R.id.tv_id);

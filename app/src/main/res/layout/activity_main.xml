@@ -100,4 +100,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Activity call dynamic" />
+
+    <Button
+        android:id="@+id/btnAndroidvRetrofit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Activcity AndroidvRetrofit" />
 </LinearLayout>

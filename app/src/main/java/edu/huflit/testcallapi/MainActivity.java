@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvSouce;
     private TextView tvUSD;
     private Button btnCallAPI;
-    private Button btnChangeAct,btnChooseImg,btnCallDynamic;
+    private Button btnChangeAct,btnChooseImg,btnCallDynamic,btnAndroidvRetrofit;
     private TextView tvPostResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
         btnChangeAct= findViewById(R.id.btnChangrActi);
         btnChooseImg = findViewById(R.id.btn_Act_Chon_Anh);
         btnCallDynamic = findViewById(R.id.btnCallDynamic);
+        btnAndroidvRetrofit = findViewById(R.id.btnAndroidvRetrofit);
+        btnAndroidvRetrofit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,RxAndroidvRetrofitRecyclerViewActivity.class);
+                startActivity(intent);
+            }
+        });
         btnCallDynamic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
